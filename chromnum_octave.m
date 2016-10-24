@@ -1,5 +1,5 @@
 function [crn,colour,order] = find_chromatic_number(adj)
-% Chromnum computes the chromatic number of a graph
+% Chromnum computes the chromatic number of an "UNDIRECTED" graph
 % Chromatic Number of a graph is the minimum number of colors by whcih
 % All nodes of the graph could be exhaustively mapped so that no two
 % adjacent nodes share the same color.
@@ -24,21 +24,21 @@ function [crn,colour,order] = find_chromatic_number(adj)
 % 1 1 1 1 0
 %
 % OUTPUT:
-% Colour code is as follows:
-% V-Violet,I-Indigo,B-Blue,G-Green,Y-Yollow,O-Orange,R-Red
+%--------
+% Number of Nodes in the given undirected graph : 5
+% Number of edges : 7 
+% Chromatic Number : 3 
+
+% Proposed Colormap:
+% ------------------
+% Node-1 : color-3
+% Node-2 : color-2
+% Node-3 : color-2
+% Node-4 : color-3
+% Node-5 : color-1
 %
-% Vertex No               colour
-%    1                      I
-%    2                      B
-%    3                      B
-%    4                      I
-%    5                      V
 %
-% crn =
-%
-%      3
-%
-%
+
 tic
 if(nargin~=1)
     sprintf('Enter the adjacency matrix as ONLY ONE iput file- .txt etc......');
@@ -49,12 +49,48 @@ else
     A=A0;
     nn=size(A);
     n=nn(1);
-
+    
+    % ZERO PADDING OF THE DIAGONAL ELEMENTS
+    
     for i = 1:n
-        A(i,i) = 0;
+        A(i,i) = 0;        
     end
+    
     A0=A;
     
+    % CHECK FOR SYMMETRY (i.e., WHETHER THE GRAPH IS UNDIRECTED)
+    
+    csym = 0;
+    matent = n*n;
+    nelmND = (n*n)-n;
+    nones = 0;
+    
+    for i = 1:n
+        for j = 1:n
+            if (A0(i,j) == A0(j,i))
+                csym = csym + 1;
+            end
+            if (A0(i,j) == 1)
+                nones = nones + 1;
+            end
+        end
+    end
+    
+    if (csym == matent)
+    fprintf('The Adjacency Matrix is symmetric:\nThe graph is undirected;\nProgram will proceed\n\n');
+    else
+        fprintf('The Adjacency Matrix is not symmetric:\nThe graph is NOT undirected !!!\nProgram will Cease.\n\n');
+        return;
+    end
+    
+    
+    % QUICK CHECK AND RETURN FOR COMPLETE GRAPHS    
+    
+    if (nones == nelmND)
+        fprintf ('%s %d %s \n%s %d\n','Its a complete graph of ',n,' nodes','The chromatic number therefore will trivially be ',n);
+        return;
+    end
+        
     if(length(no)~=2)
         sprintf('Enter a TWO DIMENSONAL adjacency matrix as an iput file- .txt etc......');
     else
