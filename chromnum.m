@@ -88,6 +88,8 @@ else
     if (nones == nelmND)
         fprintf ('%s %d %s \n%s %d\n','Its a complete graph of ',n,' nodes','The chromatic number therefore will trivially be ',n);
         crn = n;
+        colour = [1:n]';
+        order = [1:n];
         return;
     end
     
