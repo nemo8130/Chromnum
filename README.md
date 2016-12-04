@@ -1,9 +1,9 @@
 # chromnum
 Requires: `Octave` or `MATLAB (version R2016a or higher)`  
 
-## The program is not yet made public due to security reasons while it is being reviewed.
-## Please send a email request to nemo8130@gmail.com meanwhile
-## describing your identity and interest. We will get back to you with a licence agreement and the source code.
+### The program is not yet made public due to security reasons while it is being reviewed.
+### Please send a email request to nemo8130@gmail.com meanwhile
+### describing your identity and interest. We will get back to you with a licence agreement and the source code.
 
 Installation
 ```
