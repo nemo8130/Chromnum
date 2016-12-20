@@ -1,8 +1,6 @@
 # chromnum
 Requires: `Octave` or `MATLAB (version R2016a or higher)`  
 
-#### The program is not yet made public due to security reasons while it is being reviewed. Please send an email request to nemo8130@gmail.com for the time being if you wish to download and use it. Please mention your identity and describe your interest. We will get back to you with a licence agreement and the source code.
-
 Installation
 ```
 git clone https://github.com/nemo8130/Chromnum
