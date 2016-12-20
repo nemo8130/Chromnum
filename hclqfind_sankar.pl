@@ -14,7 +14,6 @@
 # read file & Collect data
 #==================================
 
-
 $adjfile = $ARGV[0] || die "Provide the adj file as an argument\n";
 chomp $adjfile;
 
