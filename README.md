@@ -1,3 +1,5 @@
+## Funding: The work was supported by the Department of Science and Technology – Science and Engineering Research Board (DST-SERB research grant PDF/2015/001079)
+
 # chromnum
 Requires: `Octave` or `MATLAB (version R2016a or higher)`  
 
