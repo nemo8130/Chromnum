@@ -6,7 +6,7 @@ function [crn,colour,order] = find_chromatic_number(adj)
 % Chromnum implements the "trailpathSA" algorithm
 % The function takes the 1-0 adjacency matrix stored in a text file as its sole input argument
 % And returns the chromatic number of the corresponding graph
-% Usage: crn = chromnum('adj.inp')
+% Usage: crn = chromnum_octave('adj.inp')
 % It also generates one color map for the graph and tabulates the same
 % Please note that this color map could be degenerate but the chromatic
 % number should be identical
