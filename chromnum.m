@@ -55,7 +55,7 @@ function [crn,colour,order] = find_chromatic_number(adj)
 % Email: Sankar Basu (nemo8130@gmail.com, scbasu@chemistry.du.ac.in)
 % Abhirup Bandyopadhyay (ab.13math1110@phd.nitdgp.ac.in, abhirupnit@gmail.com)
 % 
-% (C) All copyrights reserved to the authors and any violations should be treated as illeagal 
+% (C) All copyrights reserved to the authors; any violations may be treated as illegal  
 %
 %
 
