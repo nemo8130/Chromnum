@@ -54,4 +54,23 @@ which is the filename (with full path / locally from the current directory) cont
 % Node-3 : color-2
 % Node-4 : color-3
 % Node-5 : color-1
-
+%
+% Authors: Sankar Basu 1* and Abhirup Bandyopadhyay 2
+% 
+% 1. Department of Biochemistry, University of Calcutta
+% Circular Rd, Ballygunge, Kolkata, 
+% West Bengal 700019
+%
+% Current affiliation: Department of Chemistry
+% University of Delhi (North Campus)
+% Delhi 110007 
+%
+% 2. Department of Mathematics, National Institute of Technology, Durgapur
+% Mahatma Gandhi Avenue, Durgapur 713209, West Bengal, India
+%
+% Email: Sankar Basu (nemo8130@gmail.com, scbasu@chemistry.du.ac.in)
+% Abhirup Bandyopadhyay (ab.13math1110@phd.nitdgp.ac.in, abhirupnit@gmail.com)
+% 
+% (C) All copyrights reserved to the authors; any violations may be treated as illegal  
+%
+%
