@@ -1,5 +1,7 @@
 # chromnum
 
+#### Authors: Abhirup Bandyopadhyay and Sankar Basu 
+
 #### (c) Indian Copyright filed, Diary Number. 4955/2018-CO/SW, Filed. April, 2018
 
 #### Funding: The work was supported by the Department of Science and Technology – Science and Engineering Research Board (DST-SERB research grant PDF/2015/001079)
