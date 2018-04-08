@@ -23,9 +23,8 @@ which is the filename (with full path / locally from the current directory) cont
 ```
 % Chromnum computes the chromatic number of a graph 
 % Chromatic Number of a graph is the minimum number of colors by whcih 
-% All nodes of the graph could be exhaustively mapped so that no two
-% adjacent nodes share the same color. 
-% Chromnum implements the "trailpathSA" algorithm
+% All nodes of the graph could be exhaustively mapped so that no two adjacent nodes share the same color. 
+% Chromnum implements a novel trailing path meta-heuristic approximation algorithm
 % The function takes the 1-0 adjacency matrix stored in a text file as its sole input argument
 % And returns the chromatic number of the corresponding graph
 ```
@@ -42,7 +41,7 @@ which is the filename (with full path / locally from the current directory) cont
 %
 % Example adjacency matrix file :
 % (Each row should contain the adjacencies of one node in the graph)
-% (The matrix entries should be seperated by a single white-space)
+% (The matrix entries should be separated by a single white-space)
 %
 % 0 1 1 0 1
 % 1 0 0 1 1
@@ -63,5 +62,4 @@ which is the filename (with full path / locally from the current directory) cont
 % Node-4 : color-3
 % Node-5 : color-1
 %
-
 
