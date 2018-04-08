@@ -29,8 +29,8 @@ which is the filename (with full path / locally from the current directory) cont
 % And returns the chromatic number of the corresponding graph
 ```
 
-**Usage: crn = chromnum('adj.inp')**
-**Usage: crn = chromnum_octave('adj.inp')**
+** Usage: crn = chromnum('adj.inp') **
+** Usage: crn = chromnum_octave('adj.inp') **
 
 ```
 % It also generates one color map for the graph and tabulates the same 
