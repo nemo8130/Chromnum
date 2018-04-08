@@ -16,7 +16,7 @@ Installation
 ```
 git clone https://github.com/nemo8130/Chromnum
 cd Chromnum
-run the script chromnum.m / chromnum_octave.m in MATLAB command window / chromnum_octvae.m in Octave as a function with a single input argument
+run the script chromnum.m / chromnum_octave.m in MATLAB command window / chromnum_octave.m in Octave as a function with a single input argument
 which is the filename (with full path / locally from the current directory) containing the adjacency matrix
 ```
 
