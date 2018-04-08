@@ -1,7 +1,7 @@
 # chromnum
 
 #### Authors: Abhirup Bandyopadhyay and Sankar Basu *
-#### Author for all correspondence
+#### * Author for all correspondence
 
 #### (c) Indian Copyright filed, Diary Number. 4955/2018-CO/SW, Filed. April, 2018
 
