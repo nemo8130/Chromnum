@@ -40,7 +40,8 @@ function [crn,colour,order] = find_chromatic_number(adj)
 %
 %
 % Authors: Abhirup Bandyopadhyay and Sankar Basu 
-% 
+%
+% * Author for all Correspondence
 % Email: Sankar Basu (nemo8130@gmail.com)
 % Abhirup Bandyopadhyay (abhirupnit@gmail.com)
 % 
