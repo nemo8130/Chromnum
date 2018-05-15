@@ -9,7 +9,7 @@
 
 #### Reference:   https://www.preprints.org/manuscript/201805.0178/v1
 
-#### How to cite: Bandyopadhyay, A.; Basu, S.; Dhar, A.K. Graph Coloring: A Novel Heuristic Based on Trailing Path; Properties, Perspective and Applications in Structured Networks. Preprints 2018, 2018050178 (doi: 10.20944/preprints201805.0178.v1). 
+##### Cite: Bandyopadhyay, A.; Basu, S.; Dhar, A.K. Graph Coloring: A Novel Heuristic Based on Trailing Path; Properties, Perspective and Applications in Structured Networks. Preprints 2018, 2018050178 (doi: 10.20944/preprints201805.0178.v1). 
 
 
 Requires: `Octave` or `MATLAB (version R2016a or higher)`  
