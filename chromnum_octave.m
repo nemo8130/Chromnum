@@ -6,12 +6,12 @@ function [crn,colour,order] = chromnum_octave(adj,flag,num)
 % Chromnum implements the "trailpathSA" algorithm
 % The function takes the 1-0 adjacency matrix stored in a text file as its sole input argument
 % And returns the chromatic number of the corresponding graph
-
+%
 % Usage: [crn,colour,order] = chromnum('adj.inp')
 % Usage: [crn,colour,order] = chromnum('adj.inp',flag) 
 % for graphix display flag=1, flag=0 will not display graphix
 % Usage: [crn,colour,order] = chromnum('adj.inp',flag,num) num is minimun no of iteration
-
+%
 % It also generates one color map for the graph and tabulates the same as
 % colour and order is the order of colouring
 % Please note that this color map could be degenerate but the chromatic
