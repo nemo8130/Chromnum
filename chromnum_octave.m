@@ -7,13 +7,13 @@ function [crn,colour,order] = chromnum_octave(adj,flag,num)
 % The function takes the 1-0 adjacency matrix stored in a text file as its sole input argument
 % And returns the chromatic number of the corresponding graph
 %
-% Usage: [crn,colour,order] = chromnum('adj.inp')
-% Usage: [crn,colour,order] = chromnum('adj.inp',flag) 
-% for graphix display flag=1, flag=0 will not display graphix
-% Usage: [crn,colour,order] = chromnum('adj.inp',flag,num) num is minimun no of iteration
+% Usage: [crn,colour,order] = chromnum_octave('examples/adj.inp')      %% Default mode: with-Graphics 
+% Usage: [crn,colour,order] = chromnum_octave('examples/adj.inp',flag) %% Flag to turn off graphics (useful in batch jobs)
+% To retain graphix display, put: flag=0, Any other integer (+ve/-ve) for 'flag' will not display graphix
+% Advanced controll:
+% Usage: [crn,colour,order] = chromnum_octave('examples/adj.inp',flag,num) %% num is the minimun no of iteration
 %
-% It also generates one color map for the graph and tabulates the same as
-% colour and order is the order of colouring
+% It also generates one color map for the graph and tabulates the same
 % Please note that this color map could be degenerate but the chromatic
 % number should be identical
 % Furthermore it also returns the order at which the nodes have been
@@ -42,6 +42,24 @@ function [crn,colour,order] = chromnum_octave(adj,flag,num)
 % Node-3 : color-2
 % Node-4 : color-3
 % Node-5 : color-1
+%
+%
+%
+% Authors: Abhirup Bandyopadhyay 1 and Sankar Basu 2* 
+% 
+% 1 Department of Mathematics, National Institute of Technology, Durgapur
+% Mahatma Gandhi Avenue, Durgapur 713209, West Bengal, India
+%
+% 2 Asutosh College, (under University of Calcutta) Department of Microbiology  
+% Kolkata, India
+%
+% Email: Sankar Basu (nemo8130@gmail.com)
+% Abhirup Bandyopadhyay (abhirupnit@gmail.com)
+% 
+% (C) All copyrights reserved to the authors
+%
+% Cite as: Bandyopadhyay, A.; Dhar, A.K. Basu, S.; Graph coloring: a novel heuristic based on trailing path — properties, perspective and applications in structured networks. 
+% Soft Computing, 2019, https://doi.org/10.1007/s00500-019-04278-8
 %
 %
 
@@ -181,7 +199,7 @@ else
     end
 end
 
-if(nargin>1 && flag==1)
+if((nargin>1 && flag==0) | nargin==1)
     figure
     hold on
     for i=1:crn

@@ -7,10 +7,11 @@ function [crn,colour,order] = chromnum(adj,flag,num)
 % The function takes the 1-0 adjacency matrix stored in a text file as its sole input argument
 % And returns the chromatic number of the corresponding graph
 %
-% Usage: [crn,colour,order] = chromnum('adj.inp')
-% Usage: [crn,colour,order] = chromnum('adj.inp',flag) 
-% for graphix display flag=1, flag=0 will not display graphix
-% Usage: [crn,colour,order] = chromnum('adj.inp',flag,num) num is the minimun no of iteration
+% Usage: [crn,colour,order] = chromnum('examples/adj.inp')      %% Default mode: with-Graphics 
+% Usage: [crn,colour,order] = chromnum('examples/adj.inp',flag) %% Flag to turn off graphics (useful in batch jobs)
+% To retain graphix display, put: flag=0, Any other integer (+ve/-ve) for 'flag' will not display graphix
+% Advanced controll:
+% Usage: [crn,colour,order] = chromnum('examples/adj.inp',flag,num) %% num is the minimun no of iteration
 %
 % It also generates one color map for the graph and tabulates the same
 % Please note that this color map could be degenerate but the chromatic
@@ -44,23 +45,21 @@ function [crn,colour,order] = chromnum(adj,flag,num)
 %
 %
 %
-% Authors: Sankar Basu 1* and Abhirup Bandyopadhyay 2
+% Authors: Abhirup Bandyopadhyay 1 and Sankar Basu 2* 
 % 
-% 1. Department of Biochemistry, University of Calcutta
-% Circular Rd, Ballygunge, Kolkata, 
-% West Bengal 700019
-%
-% Current affiliation: Department of Chemistry
-% University of Delhi (North Campus)
-% Delhi 110007 
-%
-% 2. Department of Mathematics, National Institute of Technology, Durgapur
+% 1 Department of Mathematics, National Institute of Technology, Durgapur
 % Mahatma Gandhi Avenue, Durgapur 713209, West Bengal, India
 %
-% Email: Sankar Basu (nemo8130@gmail.com, scbasu@chemistry.du.ac.in)
-% Abhirup Bandyopadhyay (ab.13math1110@phd.nitdgp.ac.in, abhirupnit@gmail.com)
+% 2 Asutosh College, (under University of Calcutta) Department of Microbiology  
+% Kolkata, India
+%
+% Email: Sankar Basu (nemo8130@gmail.com)
+% Abhirup Bandyopadhyay (abhirupnit@gmail.com)
 % 
-% (C) All copyrights reserved to the authors; any violations may be treated as illegal  
+% (C) All copyrights reserved to the authors
+%
+% Cite as: Bandyopadhyay, A.; Dhar, A.K. Basu, S.; Graph coloring: a novel heuristic based on trailing path — properties, perspective and applications in structured networks. 
+% Soft Computing, 2019, https://doi.org/10.1007/s00500-019-04278-8
 %
 %
 
@@ -207,7 +206,7 @@ else
        
 end
 
-if (nargin>1 && flag==1)
+if ((nargin>1 && flag==0) | nargin==1)
                 figure
             hold on
             
