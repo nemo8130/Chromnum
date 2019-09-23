@@ -31,8 +31,8 @@ which is the filename (with full path / locally from the current directory) cont
 % And returns the chromatic number of the corresponding graph
 ```
 
-**Usage: crn = chromnum('example/adj.inp')**
-**Usage: crn = chromnum_octave('example/adj.inp')**
+**Usage: crn = chromnum('examples/adj.inp')**
+**Usage: crn = chromnum_octave('examples/adj.inp')**
 
 **RUN: help chromnum or help chromnum_octave to get familiarize with the different options:: The default mode is Graphical. But the user can also turn-off the graphics (in case of say, batch jobs) and also controll the number of finite iterations (particularly helpful for higher dimensional regular graphs) 
 
