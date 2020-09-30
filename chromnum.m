@@ -1,4 +1,4 @@
-function [crn,colour,order] = chromnum(adj,flag,num)
+function [crn,colour,order] = find_chromatic_number(adj)
 % Chromnum computes the chromatic number of an "UNDIRECTED" graph
 % Chromatic Number of a graph is the minimum number of colors by whcih
 % All nodes of the graph could be exhaustively mapped so that no two
@@ -6,13 +6,7 @@ function [crn,colour,order] = chromnum(adj,flag,num)
 % Chromnum implements the "trailpathSA" algorithm
 % The function takes the 1-0 adjacency matrix stored in a text file as its sole input argument
 % And returns the chromatic number of the corresponding graph
-%
-% Usage: [crn,colour,order] = chromnum('examples/adj.inp')      %% Default mode: with-Graphics 
-% Usage: [crn,colour,order] = chromnum('examples/adj.inp',flag) %% Flag to turn off graphics (useful in batch jobs)
-% To retain graphix display, put: flag=0, Any other integer (+ve/-ve) for 'flag' will not display graphix
-% Advanced controll:
-% Usage: [crn,colour,order] = chromnum('examples/adj.inp',flag,num) %% num is the minimun no of iteration
-%
+% Usage: crn = chromnum('adj.inp')
 % It also generates one color map for the graph and tabulates the same
 % Please note that this color map could be degenerate but the chromatic
 % number should be identical
@@ -44,27 +38,9 @@ function [crn,colour,order] = chromnum(adj,flag,num)
 % Node-5 : color-1
 %
 %
-%
-% Authors: Abhirup Bandyopadhyay 1 and Sankar Basu 2* 
-% 
-% 1 Department of Mathematics, National Institute of Technology, Durgapur
-% Mahatma Gandhi Avenue, Durgapur 713209, West Bengal, India
-%
-% 2 Asutosh College, (under University of Calcutta) Department of Microbiology  
-% Kolkata, India
-%
-% Email: Sankar Basu (nemo8130@gmail.com)
-% Abhirup Bandyopadhyay (abhirupnit@gmail.com)
-% 
-% (C) All copyrights reserved to the authors
-%
-% Cite as: Bandyopadhyay, A.; Dhar, A.K. Basu, S.; Graph coloring: a novel heuristic based on trailing path — properties, perspective and applications in structured networks. 
-% Soft Computing, 2019, https://doi.org/10.1007/s00500-019-04278-8
-%
-%
 
 tic
-if(nargin>3)
+if(nargin~=1)
     sprintf('Enter the adjacency matrix as ONLY ONE iput file- .txt etc......');
 else
     A0=load(adj,'s');
@@ -126,12 +102,9 @@ else
             n=no(1);
             size(A0);
             
-            if(nargin<3)
-                num=1;
-            end
             %==============================================================            
             %==============================================================
-            [crn,colour,order]=chromatic_no_regcor(A0,num);
+            [crn,colour,order]=chromatic_no_regcor(A0);
             %==============================================================
             %==============================================================
                         
@@ -199,15 +172,8 @@ else
             end
             
             fprintf ('\n');
-        end
-    end
                         
-
-       
-end
-
-if ((nargin>1 && flag==0) | nargin==1)
-                figure
+            figure
             hold on
             
             for i=1:crn
@@ -225,7 +191,12 @@ if ((nargin>1 && flag==0) | nargin==1)
             G = graph(targ,nei,GEW,'OmitSelfLoops');
             
             title('Chromnum: Colour hierarchy is as follows as in the legend')
-            plot(G,'Layout','circle','NodeColor',GNCF,'EdgeColor',GEC,'MarkerSize',25,'LineWidth',2.0);%,'EdgeLabel',GEW)%    Layout: circle
+            h1=plot(G,'Layout','circle','NodeColor',GNCF,'EdgeColor',GEC,'MarkerSize',15,'LineWidth',2.0);%,'EdgeLabel',GEW)%    Layout: circle
+            nl1 = h1.NodeLabel;
+            h1.NodeLabel = '';
+            xd = get(h1,'XData');
+            yd = get(h1,'YData');
+            text(xd, yd, nl1, 'FontSize',15, 'FontWeight','normal', 'HorizontalAlignment','left', 'VerticalAlignment','middle')
             legend('show');
             title('Chromnum: Colour hierarchy is as follows as in the legend')
             set (gca,'FontSize',20)
@@ -246,12 +217,20 @@ if ((nargin>1 && flag==0) | nargin==1)
                 end
             end
                                    
-            plot(G,'Layout','force','NodeColor',GNCF,'EdgeColor',GEC,'MarkerSize',25,'LineWidth',2.0);%,'EdgeLabel',GEW)%    Layout: circle
+            h2=plot(G,'Layout','force','NodeColor',GNCF,'EdgeColor',GEC,'MarkerSize',15,'LineWidth',2.0);%,'EdgeLabel',GEW)%    Layout: circle
+            nl2 = h2.NodeLabel;
+            h2.NodeLabel = '';
+            xd = get(h2,'XData');
+            yd = get(h2,'YData');
+            text(xd, yd, nl2, 'FontSize',15, 'FontWeight','normal', 'HorizontalAlignment','left', 'VerticalAlignment','middle')
             legend('show');
             title('Chromnum: Colour hierarchy is as follows as in the legend')
             set (gca,'FontSize',20)
             axis equal
-
+                        
+        end
+    end
+       
 end
 toc
 end
@@ -259,36 +238,16 @@ end
 
 %======================================================================================================
 
-function [chnum,colour,sequence] = chromatic_no_regcor(A0,num)
-%tstart=tic;
+function [chnum,colour,sequence] = chromatic_no_regcor(A0)
+tstart=tic;
 dim=size(A0);
 dim=dim(2);
 
 indicator=0;
-
-%==============================================================================
-% SETTING UP PARAMETERS FOR NUMBER OF ITERATIONS:  nmax >= ni MUST BE SATISFIED
-%==============================================================================
-
-if(num==1)
-    ni=1; 
-    nmax=1; 
-else
-    nmax=round(sqrt(10*num))+1;
-    if(nmax==0)
-        nmax=1;
-    end
-    ni=round(nmax/10)+1;
-    if(ni==0)
-        ni=1;
-    end
-end
-
-fprintf('Total number of iteration is %d',ni*nmax);
-
-
+ni=50;
 ntest=25;
 testi=10;
+nmax=1000;
 counter=1;
 
 while(indicator==0)
