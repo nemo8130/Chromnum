@@ -1,4 +1,4 @@
-function [crn,colour,order] = chromnum_octave(adj,flag,num)
+function [crn,colour,order] = find_chromatic_number(adj)
 % Chromnum computes the chromatic number of an "UNDIRECTED" graph
 % Chromatic Number of a graph is the minimum number of colors by whcih
 % All nodes of the graph could be exhaustively mapped so that no two
@@ -6,13 +6,7 @@ function [crn,colour,order] = chromnum_octave(adj,flag,num)
 % Chromnum implements the "trailpathSA" algorithm
 % The function takes the 1-0 adjacency matrix stored in a text file as its sole input argument
 % And returns the chromatic number of the corresponding graph
-%
-% Usage: [crn,colour,order] = chromnum_octave('examples/adj.inp')      %% Default mode: with-Graphics 
-% Usage: [crn,colour,order] = chromnum_octave('examples/adj.inp',flag) %% Flag to turn off graphics (useful in batch jobs)
-% To retain graphix display, put: flag=0, Any other integer (+ve/-ve) for 'flag' will not display graphix
-% Advanced controll:
-% Usage: [crn,colour,order] = chromnum_octave('examples/adj.inp',flag,num) %% num is the minimun no of iteration
-%
+% Usage: crn = chromnum('adj.inp')
 % It also generates one color map for the graph and tabulates the same
 % Please note that this color map could be degenerate but the chromatic
 % number should be identical
@@ -44,29 +38,13 @@ function [crn,colour,order] = chromnum_octave(adj,flag,num)
 % Node-5 : color-1
 %
 %
-%
-% Authors: Abhirup Bandyopadhyay 1 and Sankar Basu 2* 
-% 
-% 1 Department of Mathematics, National Institute of Technology, Durgapur
-% Mahatma Gandhi Avenue, Durgapur 713209, West Bengal, India
-%
-% 2 Asutosh College, (under University of Calcutta) Department of Microbiology  
-% Kolkata, India
-%
-% Email: Sankar Basu (nemo8130@gmail.com)
-% Abhirup Bandyopadhyay (abhirupnit@gmail.com)
-% 
-% (C) All copyrights reserved to the authors
-%
-% Cite as: Bandyopadhyay, A.; Dhar, A.K. Basu, S.; Graph coloring: a novel heuristic based on trailing path — properties, perspective and applications in structured networks. 
-% Soft Computing, 2019, https://doi.org/10.1007/s00500-019-04278-8
-%
-%
 
 tic
-if(nargin>3)
-    sprintf('Enter the adjacency matrix, flag, number of iteration as iput');
+if(nargin~=1)
+    sprintf('Enter the adjacency matrix as ONLY ONE iput file- .txt etc......');
 else
+    outfile=strcat(adj,'.chromnum');
+    fid1=fopen(outfile,'w');
     A0=load(adj,'s');
     no=size(A0);
     
@@ -74,7 +52,7 @@ else
     nn=size(A);
     n=nn(1);
     
-% ZERO PADDING OF THE DIAGONAL ELEMENTS
+    % ZERO PADDING OF THE DIAGONAL ELEMENTS
     
     for i = 1:n
         A(i,i) = 0;        
@@ -82,7 +60,7 @@ else
     
     A0=A;
     
-% CHECK FOR SYMMETRY (i.e., WHETHER THE GRAPH IS UNDIRECTED)
+    % CHECK FOR SYMMETRY (i.e., WHETHER THE GRAPH IS UNDIRECTED)
     
     csym = 0;
     matent = n*n;
@@ -108,14 +86,14 @@ else
     end
     
     
-% QUICK CHECK AND RETURN FOR COMPLETE GRAPHS    
+    % QUICK CHECK AND RETURN FOR COMPLETE GRAPHS    
     
     if (nones == nelmND)
         fprintf ('%s %d %s \n%s %d\n','Its a complete graph of ',n,' nodes','The chromatic number therefore will trivially be ',n);
         crn = n;
-        order=1:n;
-        colour=rand(3,n);
-        
+        colour = [1:n]';
+        order = [1:n];
+        return;
     end
         
     if(length(no)~=2)
@@ -126,11 +104,14 @@ else
         else
             n=no(1);
             size(A0);
-            if(nargin<3)
-                num=1;
-            end
-            [crn,colour,order]=chromatic_no_regcor(A0,num);
+            %==============================================================            
+            %==============================================================
+            [crn,colour,order]=chromatic_no_regcor(A0);
+            %==============================================================
+            %==============================================================
+
             le=sum(sum(A0))/2;
+            ld = le/(n*(n-1)/2);
             
             targ = [];
             nei = [];
@@ -145,6 +126,7 @@ else
             
             fprintf('\nNumber of Nodes in the given undirected graph : %d',n);
             fprintf('\nNumber of edges : %d ',le);
+            fprintf('\nLink Density: %f ',ld);
             fprintf('\nChromatic Number : %d \n',crn);
             
             GNCF = zeros(n,3);
@@ -179,63 +161,62 @@ else
                 end
                 
             end
-            
 
-% Colormap is stored in a file and called to execute drawgraph 
+            % Colormap is stored in a file and called to execute drawgraph 
             
-%             fprintf ('\nProposed Colormap:');
-%             fprintf ('\n------------------\n');
-%             %delete colormap.inp;
-%             fidcm = fopen('colormap.inp','w');
-%             for i = 1:n
-%             fprintf(fidcm,'%f %f %f\n',GNCF(i,:));
-%             fprintf('Node-%d : color-%d\n',i,colour(i));
-%             end
-%             fclose(fidcm);
- 
-%================ LEGEND ========================
- 
-        end
-    end
-end
-
-if((nargin>1 && flag==0) | nargin==1)
-    figure
-    hold on
-    for i=1:crn
-        b=num2str(i);
-        c='colour-';
-        name=[c,b];
-        for j=1:n
-            if(colour(j)==i)
-                y(i)=plot(0,0,'color',GNCF(j,:),'DisplayName',name);
-                break
+            fprintf ('\nProposed Colormap:');
+            fprintf ('\n------------------\n');
+            delete colormap.inp;
+            fidcm = fopen('colormap.inp','w');
+            
+            for i = 1:n
+                fprintf(fidcm,'%f %f %f\n',GNCF(i,:));
+                fprintf('Node-%d : color-%d\n',i,colour(i));
+                fprintf(fid1,'Node-%d : color-%d\n',i,colour(i));
             end
+            
+            fprintf(fid1,'\n#Chromatic Number : %d \n',crn);                        
+            fclose(fidcm);
+            fclose(fid1);
+            
+            fprintf('#==========================================================================\n');
+            fprintf('OUTFILE: %s\n', outfile);
+            !ls -lart | tail -n1
+            fprintf('#==========================================================================\n\n');
+ 
+            %================ LEGEND ========================
+            
+          
+            figure
+            hold on
+            for i=1:crn
+                b=num2str(i);
+                c='colour-';
+                name=[c,b];
+                for j=1:n
+                    if(colour(j)==i)
+                        y(i)=plot(0,0,'color',GNCF(j,:),'DisplayName',name);
+                        break
+                    end
+                end
+            end
+
+            
+            %=============== DRAWGRAPH ======================
+            
+            legend('show');
+            title('Chromnum: Colour hierarchy is as follows as in the legend')                     
+            drawgraph(adj,'colormap.inp');
+            set (gca,'FontSize',15)
+            axis equal 
         end
     end
-
-%=============== DRAWGRAPH ======================
-            
-    legend('show','Location','NorthEastOutside');
-    title('Chromnum: Colour hierarchy is as follows as in the legend')     
-%%            
-    drawrandgraph(adj,GNCF);
-%   drawgraph(adj,GNCF);
-%%
-    set (gca,'FontSize',15)
-    axis equal 
-    hAxes = gca;
-    hAxes.XRuler.Axle.LineStyle = 'none';  
-    axis off
-end
-    
-if(nargin==3)
     
 end
 toc
 end
 
-
+%=======================================================================================================
 
 % Draw a graph in a circular layout given an adjacency matrix
 % Color the nodes as specified in a colormap
@@ -245,8 +226,8 @@ end
 function drawgraph(adjfile,colormap)
 
 adj = load (adjfile,'s');
-%colmap = load (colormap,'s');
-colmap =colormap;
+colmap = load (colormap,'s');
+
 sa = size(adj);
 sc = size(colmap);
 N = sa(1);
@@ -261,21 +242,22 @@ end
 
 deg2rad = pi/180.0;
 rbig = 15.0;
-r = 0.5;
-% XX = [];
-% YY = [];
-% 
-% for theta = 0:1:360
-%     theta_rad = theta*deg2rad;
-%     xcir = rbig*cos(theta_rad);
-%     ycir = rbig*sin(theta_rad);
-%     XX = [XX;xcir];
-%     YY = [YY;ycir];
-% end
-% 
-% hold on
-% %plot (XX,YY,'.')
-% axis equal
+
+XX = [];
+YY = [];
+
+for theta = 0:1:360
+    theta_rad = theta*deg2rad;
+    xcir = rbig*cos(theta_rad);
+    ycir = rbig*sin(theta_rad);
+    XX = [XX;xcir];
+    YY = [YY;ycir];
+end
+
+%figure
+hold on
+%plot (XX,YY,'.')
+axis equal
 
 % Draw Nodes in a circular layout
 
@@ -291,7 +273,7 @@ for i = 1:N
     ydt = rbig*sin(thNrad);
     plot(xdt,ydt,'o')
     cm = colmap(i,:);
-    D=filled_circle(xdt,ydt,cm,r);
+    D=filled_circle(xdt,ydt,cm);
     xdts = [xdts;xdt];
     ydts = [ydts;ydt];
     text((xdt+0.5),(ydt+0.5),num2str(i),'FontSize',15)
@@ -308,90 +290,21 @@ for i = 1:N
         if (adj(i,j)==1)
             xp = [xp;xdts(i);xdts(j)];
             yp = [yp;ydts(i);ydts(j)];
-            plot(xp,yp,'k-','LineWidth',1.5)
+            plot(xp,yp,'k-','LineWidth',2.5)
             Nlinks = Nlinks + 1;
         end
     end
 end
         
+%disp(Nlinks)        
+       
 end
 
-
-% Draw a graph in a circular layout given an adjacency matrix
-% Color the nodes as specified in a colormap
-% provide the matrix file_name as the input argument
-% Usage: drawgraph('adj.inp','colormap.inp')
-%
-function drawrandgraph(adjfile,colormap)
-
-adj = load (adjfile,'s');
-%colmap = load (colormap,'s');
-colmap =colormap;
-sa = size(adj);
-sc = size(colmap);
-N = sa(1);
-N2 = sc(1);
-
-if (N ~= N2)
-    fprintf('Dimension Missmatch between the adjacency matrix and the colormap\n');
-    disp(N)
-    disp(N2)
-    return
-end
-rbig = 10*N;
-rr=N/(8);
-rsmall=6*rr;
-
-XX = zeros(1,N);
-YY = zeros(1,N);
-XX(1)=rand*rbig;
-YY(1)=rand*rbig;
-for i=2:N
-    mind=10^-10;
-    while(mind<rsmall)
-        XX(i)=rand*rbig;
-        YY(i)=rand*rbig;
-        dist=[];
-        for j=1:i-1
-            ds=sqrt((XX(i)-XX(j))^2+(YY(i)-YY(j))^2);
-            dist=[dist,ds];
-        end
-        mind=min(dist);
-    end
-end
-    
-%fprintf('Coordinate are computed\n')
-
-for i = 1:N
-    %plot(XX,YY,'o')
-    cm = colmap(i,:);
-    D=filled_circle(XX(i),YY(i),cm,rr);
-    text((XX(i)+2.5),(YY(i)+2.5),num2str(i),'FontSize',10)
-end
-% Draw Edges: Connect Nodes 
-
-Nlinks = 0;
-
-for i = 1:N
-    for j = (i+1):N
-        xp = [];
-        yp = [];
-        if (adj(i,j)==1)
-            xp = [xp;XX(i);XX(j)];
-            yp = [yp;YY(i);YY(j)];
-            plot(xp,yp,'k-','LineWidth',0.1)
-            Nlinks = Nlinks + 1;
-        end
-    end
-end
-end
-
-
-function Y = filled_circle(xo,yo,cm,rr)
+function Y = filled_circle(xo,yo,cm)
 
     XXf = [];
     YYf = [];
-    r = rr;
+    r = 0.5;
 
     deg2rad = pi/180.0;
     
@@ -405,44 +318,26 @@ function Y = filled_circle(xo,yo,cm,rr)
         end
     end
     
-    plot(XXf,YYf,'Color',cm,'Marker','.');
+    plot(XXf,YYf,'Color',cm,'Marker','.')
 
     Y=1;
     
 end
 
-function [chnum,colour,sequence] = chromatic_no_regcor(A0,num)
-%tic
+
+%=======================================================================================================
+
+
+function [chnum,colour,sequence] = chromatic_no_regcor(A0)
+tstart=tic;
 dim=size(A0);
 dim=dim(2);
 
 indicator=0;
-
-%==============================================================================
-% SETTING UP PARAMETERS FOR NUMBER OF ITERATIONS:  nmax >= ni MUST BE SATISFIED
-%==============================================================================
-
-if(num==1)
-    ni=1; 
-    nmax=1; 
-else
-    nmax=round(sqrt(10*num))+1;
-    if(nmax==0)
-        nmax=1;
-    end
-    ni=round(nmax/10)+1;
-    if(ni==0)
-        ni=1;
-    end
-end
-
-fprintf('Total number of iteration is %d',ni*nmax);
-% ni=1; %50
-% nmax=1; %1000;
-
-
+ni=50;
 ntest=25;
 testi=10;
+nmax=1000;
 counter=1;
 
 while(indicator==0)
@@ -450,14 +345,14 @@ while(indicator==0)
     
     if(nr>nmax)
         str=num2str(counter);
-% sprintf('\nError Message: step %s : error-00 Convergence not attained.\nConvergence could not be attend through the program.\nFor random simulation upto %d times state %d',str,nmax,counter)
+        %sprintf('\nError Message: step %s : error-00 Convergence not attained.\nConvergence could not be attend through the program.\nFor random simulation upto %d times state %d',str,nmax,counter)
         indicator=1;
     else
         str=num2str(counter);
         number=zeros(1,ntest);
         for loop=1:ntest
             val=dim+1;
-% fprintf('%s %d\n','val:',val)
+%	fprintf('%s %d\n','val:',val)
             for index=1:nr
                 n=dim;
                 A=A0;
@@ -477,7 +372,7 @@ while(indicator==0)
                     cnt=0;
                     
                     while (m>0)
-%%  FINDING THE INDEX NODE ID WHICH SHOULD BE COLOURED IN EACH STEP
+                        %%                  FINDING THE INDEX NODE ID WHICH SHOULD BE COLOURED IN EACH STEP
                         dseq=sum(A);
                         m=max(dseq);
                         if (cnt==0)
@@ -544,7 +439,7 @@ while(indicator==0)
                             end
                         end
                         
-%%                  FINDING THE SET OF NEIGHBOURS OF INDEX NODE ID
+                        %%                  FINDING THE SET OF NEIGHBOURS OF INDEX NODE ID
                         
                         idx=0;
                         for i=1:n
@@ -565,7 +460,7 @@ while(indicator==0)
                         
                         
                         while (isempty(nbl)==0)
-%%                         COLOURINR THE INDEX NODE ID
+                            %%                         COLOURINR THE INDEX NODE ID
                             
                             for i=1:cn
                                 if (ba(id,i)==0)
@@ -595,12 +490,12 @@ while(indicator==0)
                                 end
                             end
                             
-%%                   BFA NO. OF THE COLOURS THAT ARE ACCUPIED BY THE NEIGHBOURS
+                            %%                   BFA NO. OF THE COLOURS THAT ARE ACCUPIED BY THE NEIGHBOURS
                             for i=1:n
                                 bfa(i)=sum(ba(i,:));
                             end
                             
-%%                        FINDING THE NEW INDEX NODE ID WHICH SHOULD BE COLOURED IN EACH STEP
+                            %%                        FINDING THE NEW INDEX NODE ID WHICH SHOULD BE COLOURED IN EACH STEP
                             tmpd=zeros(1,nn);
                             tmpb=zeros(1,nn);
                             for i=1:nn
@@ -752,5 +647,8 @@ while(indicator==0)
     end
 end
 %fprintf('%s %d\n','ntest:',length(number))
-%toc
+telp=toc;
+fprintf('Elapsed time for the sub-routine: %f sec.\n',telp);
 end
+
+
